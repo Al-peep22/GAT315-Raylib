@@ -1,14 +1,28 @@
 #include "Body.h"
-#include "raymath.h"
 
-void Body::AddForce(Vector2 force)
+void Body::AddForce(Vector2 force, ForceMode forceMode)
 {
-    acceleration += force / mass;
+	if (bodyType != BodyType::Dynamic) return;
+
+	switch (forceMode)
+	{
+	case ForceMode::Force:
+		acceleration += force / mass;
+		break;
+	case ForceMode::Impulse:
+		velocity += force * inverseMass;
+		break;
+	case ForceMode::Acceleration:
+		acceleration += force;
+		break;
+	case ForceMode::VelocityChange:
+		velocity += force;
+		break;
+	}
 }
 
-void Body::Step(float dt)
+void Body::Draw() const
 {
-    // Semi-implicit Euler (your code uses this)
-    velocity += acceleration * dt;
-    position += velocity * dt;
+	DrawCircleV(position, size, RED);
+	DrawCircleLinesV(position, size, WHITE);
 }

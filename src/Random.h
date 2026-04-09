@@ -13,5 +13,6 @@ inline float GetRandomFloat(float max)
 
 inline float GetRandomFloat(float min, float max)
 {
+    //if (min > max)
     return min + GetRandomFloat() * (max - min);
 }
