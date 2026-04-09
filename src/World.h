@@ -2,6 +2,7 @@
 #include <vector>
 #include "Body.h"
 #include "Effector.h"
+#include "Collision.h"
 
 struct World
 {
@@ -19,10 +20,12 @@ public:
     void Step(float dt);
     void Draw(Texture2D wabbit) const;
     void Draw();
+    void UpdateCollision();
 
 private:
     std::vector<Body> bodies;
     Vector2 gravity;
 
     std::vector<Effector*> effectors;
+    std::vector<Contact> contacts;
 };

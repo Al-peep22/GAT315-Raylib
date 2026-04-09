@@ -7,7 +7,7 @@ void Body::AddForce(Vector2 force, ForceMode forceMode)
 	switch (forceMode)
 	{
 	case ForceMode::Force:
-		acceleration += force / mass;
+		acceleration += force * inverseMass;
 		break;
 	case ForceMode::Impulse:
 		velocity += force * inverseMass;

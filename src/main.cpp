@@ -8,6 +8,8 @@
 #include "point_effector.h"
 #include "GravitationalEffector.h"
 
+#include <string>
+
 int main ()
 {
 	SetRandomSeed(5);
@@ -20,7 +22,7 @@ int main ()
 	// Load texture from resources directory
 	Texture wabbit = LoadTexture("wabbit_alpha.png");
 	
-	SetTargetFPS(10);
+	SetTargetFPS(60);
 
 	World world;
 	//world.AddEffector(new PointEffector(Vector2{ 200, 200 }, 100.0f, 30000.0f));
@@ -48,7 +50,7 @@ int main ()
 			float angle = GetRandomFloat() * (2 * PI);
 			Vector2 direction = { cosf(angle), sinf(angle) };
 
-			body.AddForce(direction * (50.0f + GetRandomFloat() * 500.0f), ForceMode::VelocityChange);
+			body.AddForce(direction * (10.0f + GetRandomFloat() * 20.0f), ForceMode::VelocityChange);
 
 			body.size = 5.0f + GetRandomFloat() * 20.0f;
 			body.restitution = 0.5f + GetRandomFloat() * 0.5f;
@@ -74,11 +76,12 @@ int main ()
 		BeginDrawing();
 		ClearBackground(BLACK); // clear the background to black
 
-		DrawText("FPS: " + GetFPS(), 10, 10, 20, WHITE); // draw the current FPS at x=10, y=10 with font size 20 and white color
+		DrawText(("FPS: " + std::to_string(GetFPS())).c_str(), 10, 10, 20, WHITE); // draw the current FPS at x=10, y=10 with font size 20 and white color
 		//DrawText("Hello Raylib", 200, 200, 20, WHITE); // draw some text at x=200, y=200 with font size 20 and white color
 		//DrawTexture(wabbit, 400, 200, WHITE); // draw our texture at x=400, y=200 with white tint (no tint)
 
-		world.Draw(wabbit);
+		//world.Draw(wabbit);
+		world.Draw();
 		
 		// END_DRAW
 		EndDrawing();
