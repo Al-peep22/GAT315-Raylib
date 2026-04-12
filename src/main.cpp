@@ -44,6 +44,7 @@ int main ()
 			Body body;
 
 			body.bodyType = (IsKeyDown(KEY_LEFT_ALT)) ? BodyType::Static : BodyType::Dynamic;
+			body.color = (IsKeyDown(KEY_LEFT_ALT)) ? BLUE : RED;
 
 			body.position = GetMousePosition();
 
@@ -53,7 +54,7 @@ int main ()
 			body.AddForce(direction * (10.0f + GetRandomFloat() * 20.0f), ForceMode::VelocityChange);
 
 			body.size = 5.0f + GetRandomFloat() * 20.0f;
-			body.restitution = 0.5f + GetRandomFloat() * 0.5f;
+			body.restitution = 0.5f + GetRandomFloat() * 1.0f; // 0.5 to 1.5 restitution
 			body.mass = body.size;
 			body.inverseMass = (body.bodyType == BodyType::Static) ? 0 : (1.0f / body.mass);
 			body.gravityScale = 0.0f;

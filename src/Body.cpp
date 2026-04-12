@@ -23,6 +23,6 @@ void Body::AddForce(Vector2 force, ForceMode forceMode)
 
 void Body::Draw() const
 {
-	DrawCircleV(position, size, RED);
+	DrawCircleV(position, size, color);
 	DrawCircleLinesV(position, size, WHITE);
 }

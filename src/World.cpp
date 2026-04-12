@@ -80,6 +80,7 @@ void World::UpdateCollision()
     contacts.clear();
     CreateContacts(bodies, contacts);
     SeparateContacts(contacts);
+    ResolveContacts(contacts);
 
     // collision
     for (auto& body : bodies)
