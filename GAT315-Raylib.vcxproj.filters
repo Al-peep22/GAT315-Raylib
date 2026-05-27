@@ -36,10 +36,28 @@
     <ClInclude Include="src\point_effector.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GravitationalEffector.h">
+    <ClInclude Include="src\gravitational_effector.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Collision.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\drag_effector.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\area_effector.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui_physics.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\raygui.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\world_camera.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spring.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,7 +77,22 @@
     <ClCompile Include="src\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GravitationalEffector.cpp">
+    <ClCompile Include="src\gravitational_effector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\area_effector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\drag_effector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Effector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\world_camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

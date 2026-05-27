@@ -3,25 +3,45 @@
 #include "raymath.h"
 #include <Integrater.h>
 
+Vector2 World::gravity = {0,9.8f};
 
 void World::AddBody(const Body& body)
 {
     bodies.push_back(body);
 }
 
+void World::AddEffector(Effector* effector)
+{
+    effectors.push_back(effector);
+}
+
+void World::AddSpring(Body& bodyA, Body& bodyB, float restLength, float stiffness)
+{
+	//Spring sprig = Spring(&bodyA, &bodyB, restLength, stiffness);
+	//springs.push_back(sprig);
+}
+
 void World::Step(float dt)
 {
-    //// Reset acceleration
-    //for (auto& body : bodies)
-    //    body.acceleration = { 0, 0 };
 
-    //// Apply world gravity
-    //for (auto& body : bodies)
-    //    body.AddForce(gravity * body.gravityScale * 100.0f, ForceMode::Acceleration);
+    // Apply world gravity
+    for (auto& body : bodies)
+        body.AddForce(gravity * body.gravityScale, ForceMode::Acceleration);
 
-    //// Apply effectors (NEW)
-    //for (auto& effector : effectors)
-    //    effector->Apply(bodies);
+    // Apply effectors (NEW)
+    for (auto& effector : effectors)
+        effector->Apply(bodies);
+
+    for (auto& spring : springs)
+		spring->Apply(100.0f);
+
+    for (auto& body : bodies)
+        if (body.bodyType == BodyType::Dynamic)
+			body.AddForce(body.velocity * -body.damping, ForceMode::Force);
+
+    // Reset acceleration
+    for (auto& body : bodies)
+        body.acceleration = { 0, 0 };
 
     // Right-click radial force
     if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
@@ -42,7 +62,10 @@ void World::Step(float dt)
     for (auto& body : bodies)
         SemiImplicitEuler(body, dt);
 
-	UpdateCollision();
+    for (int i = 0; i < 4; i++) {
+	    UpdateCollision();
+    }
+
     //// Collisions
     //for (auto& body : bodies)
     //{
@@ -72,6 +95,7 @@ void World::Draw(Texture2D wabbit) const
 
 void World::Draw()
 {
+    for (const auto& effector : effectors) effector->Draw();
 	for (const auto& body : bodies) body.Draw();
 }
 
@@ -85,25 +109,34 @@ void World::UpdateCollision()
     // collision
     for (auto& body : bodies)
     {
-        if (body.position.x + body.size > GetScreenWidth())
+        if (body.position.x + body.size > boundsMax.x)
         {
-            body.position.x = GetScreenWidth() - body.size;
+            body.position.x = boundsMax.x - body.size;
             body.velocity.x *= -body.restitution;
         }
-        if (body.position.x - body.size < 0)
+        if (body.position.x - body.size < boundsMin.x)
         {
-            body.position.x = body.size;
+            body.position.x = boundsMin.x + body.size;
             body.velocity.x *= -body.restitution;
         }
-        if (body.position.y + body.size > GetScreenHeight())
+        if (body.position.y + body.size > boundsMax.y)
         {
-            body.position.y = GetScreenHeight() - body.size;
+            body.position.y = boundsMax.y - body.size;
             body.velocity.y *= -body.restitution;
         }
-        if (body.position.y - body.size < 0)
+        if (body.position.y - body.size < boundsMin.y)
         {
-            body.position.y = body.size;
+            body.position.y = boundsMin.y + body.size;
             body.velocity.y *= -body.restitution;
         }
     }
+}
+
+Body* World::GetBodyIntersect(const Vector2& position)
+{
+    for (auto& body : bodies) {
+        if (CheckCollisionPointCircle(position, body.position, body.size))
+            return &body;
+    }
+    return nullptr;
 }
